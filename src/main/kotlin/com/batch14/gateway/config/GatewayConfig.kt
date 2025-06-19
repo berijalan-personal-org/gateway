@@ -26,6 +26,30 @@ class GatewayConfig (
                         //apply filter
                         f.filter(authHeaderFilter)
                     }.uri("lb://user-service")
+            }
+            //routing ke product service
+            .route("product-service") {r: PredicateSpec ->
+                r.path("/gateway/product-service/**")
+                    .filters {f: GatewayFilterSpec ->
+                        //rewrite path
+                        f.rewritePath("/gateway/product-service/(?<segment>.*)",
+                            "/product-service/\${segment}"
+                        )
+                        //apply filter
+                        f.filter(authHeaderFilter)
+                    }.uri("lb://product-service")
+            }
+            //routing ke order service
+            .route("order-service") {r: PredicateSpec ->
+                r.path("/gateway/order-service/**")
+                    .filters {f: GatewayFilterSpec ->
+                        //rewrite path
+                        f.rewritePath("/gateway/order-service/(?<segment>.*)",
+                            "/order-service/\${segment}"
+                        )
+                        //apply filter
+                        f.filter(authHeaderFilter)
+                    }.uri("lb://order-service")
             }.build()
     }
 }

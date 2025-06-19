@@ -8,8 +8,9 @@ import java.util.function.Predicate
 class AuthValidator {
     //list url yang whitelist
     val whitelistUrl = listOf(
-        "user/login",
-        "user/register"
+        "users/login",
+        "users/register",
+        "users/verify-otp"
     )
 
     //cek apakah request whitelist
